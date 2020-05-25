@@ -45,7 +45,7 @@ namespace AVPlayer
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             openFileDialog.Filter = "Video files |*.mp4;*.avi;*.mkv;|Audio files|*.mp3;*.ogg;*.m4a;*.flac;*.wav|All files (*.*)|*.*";
-            openFileDialog.FilterIndex = 2;
+            openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = false;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -59,41 +59,18 @@ namespace AVPlayer
             if (myPlayer.Paused == false)
             {
                 myPlayer.Pause();
+                playButton.Text = "Play";
             }
-            else
-                myPlayer.Paused=false;
+            else { 
+                myPlayer.Paused = false;
+                playButton.Text = "Pause";
+            }
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
             myPlayer.Stop();
         }
-
-        //int mouseX = 0;
-        //int mouseY = 0;
-        //bool mouseDown;
-
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
-        {
-            //mouseDown = true;
-        }
-
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
-        {
-            //if (mouseDown == true)
-            //{
-            //    mouseX = MousePosition.X - 500;
-            //    mouseY = MousePosition.Y - 250;
-
-            //    this.SetDesktopLocation(mouseX, mouseY);
-            //}
-        }
-
-        private void panel1_MouseUp(object sender, MouseEventArgs e)
-        {
-            //mouseDown = false;
-        }
-
 
         private void opemToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -116,6 +93,9 @@ namespace AVPlayer
             Close();
         }
 
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
 
+        }
     }
 }
