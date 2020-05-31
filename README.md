@@ -1,6 +1,12 @@
 # Player
 Video and music player 
 
+### v0.2.2
+* Usprawnienia wizualne
+* Usprawnienie trybu pełnoekranowego (okno bez ramek)
+* Dodano przyciski maksymalizacji okna, zamykania programu
+* Dodano funkcjonalność przesuwania okna bez paska tytułowego windows
+
 ### v0.2
 * Dodano suwak głośności
 * Dodano pasek postępu
