@@ -3,9 +3,9 @@ Video and music player
 
 ### v0.2.2
 * Usprawnienia wizualne
-* Usprawnienie trybu pełnoekranowego (okno bez ramek)
+* Usprawnienie trybu pełnoekranowego (okno bez ramek, przejście do pełnego ekrany przez podwójne kliknięcie na panel itd.)
 * Dodano przyciski maksymalizacji okna, zamykania programu
-* Dodano funkcjonalność przesuwania okna bez paska tytułowego windows
+* Dodano funkcjonalność przesuwania okna bez paska tytułowego
 
 ### v0.2
 * Dodano suwak głośności
