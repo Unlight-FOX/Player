@@ -15,6 +15,7 @@ namespace AVPlayer
     {
         Player myPlayer;
         bool fullScreen = false;
+
         public playerWindow()
         {
             InitializeComponent();
@@ -24,10 +25,12 @@ namespace AVPlayer
             this.MinimizeBox = false;
             this.Text = "";
             myPlayer = new Player();
+            myPlayer.Events.MediaSubtitleChanged += MyPlayer_MediaSubtitleChanged;
+            myPlayer.Subtitles.DirectoryDepth = 1;
             myPlayer.Sliders.Position.TrackBar = progressBar;
             myPlayer.Sliders.AudioVolume = volumeBar;
             myPlayer.Events.MediaPositionChanged += myPlayer_MediaPositionChanged;
-        }
+    }
 
         private bool mouseDown;
         private Point lastLocation;
@@ -66,6 +69,11 @@ namespace AVPlayer
         {
             TimeSpan fromStart = TimeSpan.FromTicks(e.FromStart);
             label1.Text = fromStart.ToString(@"hh\:mm\:ss");
+        }
+
+        private void MyPlayer_MediaSubtitleChanged(object sender, SubtitleEventArgs e)
+        {
+            subtitlesLabel.Text = e.Subtitle;
         }
 
         private void OpenButton_Click(object sender, EventArgs e)
@@ -139,6 +147,16 @@ namespace AVPlayer
         private void ViewPanel_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             fullScr();
+        }
+
+        private void muteButton_Click(object sender, EventArgs e)
+        {
+            myPlayer.Mute = !myPlayer.Mute;
+        }
+
+        private void subtitlesLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
