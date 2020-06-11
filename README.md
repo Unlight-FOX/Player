@@ -1,6 +1,10 @@
 # Player
 Video and music player 
 
+### v0.2.3
+* Dodano przycisk mute
+* Dodano wsparcie dla napisów .srt
+
 ### v0.2.2
 * Usprawnienia wizualne
 * Usprawnienie trybu pełnoekranowego (okno bez ramek, przejście do pełnego ekrany przez podwójne kliknięcie na panel itd.)
