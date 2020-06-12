@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.viewPanel = new System.Windows.Forms.Panel();
+            this.subtitlesLabel = new System.Windows.Forms.Label();
             this.muteButton = new System.Windows.Forms.Button();
             this.volumeBar = new System.Windows.Forms.TrackBar();
             this.playButton = new System.Windows.Forms.Button();
@@ -40,7 +41,6 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.closeButton = new System.Windows.Forms.Button();
             this.fullscrButton = new System.Windows.Forms.Button();
-            this.subtitlesLabel = new System.Windows.Forms.Label();
             this.viewPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.progressBar)).BeginInit();
@@ -61,10 +61,23 @@
             this.viewPanel.Name = "viewPanel";
             this.viewPanel.Size = new System.Drawing.Size(614, 436);
             this.viewPanel.TabIndex = 0;
+            this.viewPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.viewPanel_DragDrop);
+            this.viewPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.viewPanel_DragEnter);
             this.viewPanel.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ViewPanel_MouseDoubleClick);
             this.viewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ViewPanel_MouseDown);
             this.viewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ViewPanel_MouseMove);
             this.viewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ViewPanel_MouseUp);
+            // 
+            // subtitlesLabel
+            // 
+            this.subtitlesLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.subtitlesLabel.AutoSize = true;
+            this.subtitlesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.subtitlesLabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.subtitlesLabel.Location = new System.Drawing.Point(229, 367);
+            this.subtitlesLabel.Name = "subtitlesLabel";
+            this.subtitlesLabel.Size = new System.Drawing.Size(0, 17);
+            this.subtitlesLabel.TabIndex = 7;
             // 
             // muteButton
             // 
@@ -193,18 +206,6 @@
             this.fullscrButton.UseVisualStyleBackColor = true;
             this.fullscrButton.Click += new System.EventHandler(this.fullscrButton_Click);
             // 
-            // subtitlesLabel
-            // 
-            this.subtitlesLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.subtitlesLabel.AutoSize = true;
-            this.subtitlesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.subtitlesLabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.subtitlesLabel.Location = new System.Drawing.Point(229, 367);
-            this.subtitlesLabel.Name = "subtitlesLabel";
-            this.subtitlesLabel.Size = new System.Drawing.Size(0, 17);
-            this.subtitlesLabel.TabIndex = 7;
-            this.subtitlesLabel.Click += new System.EventHandler(this.subtitlesLabel_Click);
-            // 
             // playerWindow
             // 
             this.AllowDrop = true;
@@ -230,7 +231,6 @@
             this.Name = "playerWindow";
             this.RightToLeftLayout = true;
             this.Text = "AVPlayer";
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.PlayerWindow_DragDrop);
             this.viewPanel.ResumeLayout(false);
             this.viewPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();

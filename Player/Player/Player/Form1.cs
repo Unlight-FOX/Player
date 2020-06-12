@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -57,14 +58,6 @@ namespace AVPlayer
             mouseDown = false;
         }
 
-        private void loadFile(string file)
-        {
-            myPlayer.Play(file, viewPanel);
-            TimeSpan Stop = myPlayer.Media.Length;
-            label2.Text = Stop.ToString(@"hh\:mm\:ss");
-            if (myPlayer.LastError) MessageBox.Show(myPlayer.LastErrorString);
-        }
-
         private void myPlayer_MediaPositionChanged(object sender, PositionEventArgs e)
         {
             TimeSpan fromStart = TimeSpan.FromTicks(e.FromStart);
@@ -87,8 +80,16 @@ namespace AVPlayer
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 loadFile(openFileDialog.FileName);
-                titleLabel.Text = openFileDialog.SafeFileName;
             }
+        }
+
+        private void loadFile(string file)
+        {
+            myPlayer.Play(file, viewPanel);
+            titleLabel.Text = Path.GetFileName(file);
+            TimeSpan Stop = myPlayer.Media.Length;
+            label2.Text = Stop.ToString(@"hh\:mm\:ss");
+            if (myPlayer.LastError) MessageBox.Show(myPlayer.LastErrorString);
         }
 
         private void playButton_Click(object sender, EventArgs e)
@@ -108,11 +109,6 @@ namespace AVPlayer
         {
             myPlayer.Stop();
             titleLabel.Text = "";
-        }
-
-        private void PlayerWindow_DragDrop(object sender, DragEventArgs e)
-        {
-
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -154,9 +150,19 @@ namespace AVPlayer
             myPlayer.Mute = !myPlayer.Mute;
         }
 
-        private void subtitlesLabel_Click(object sender, EventArgs e)
+        private void viewPanel_DragEnter(object sender, DragEventArgs e)
         {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.All;
+            else
+                e.Effect = DragDropEffects.None;
+        }
 
+        private void viewPanel_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] s = e.Data.GetData(DataFormats.FileDrop) as string[];
+            string path = s[0];
+            loadFile(path);
         }
     }
 }
