@@ -4,6 +4,7 @@ Video and music player
 ### v0.2.3
 * Dodano przycisk mute
 * Dodano wsparcie dla napisów .srt
+* Dodanio możliwość ładowania plików poprzez drag and drop
 
 ### v0.2.2
 * Usprawnienia wizualne
