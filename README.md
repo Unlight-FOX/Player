@@ -4,6 +4,7 @@ Video and music player
 ### v0.2.4 
 * Usprawnienia wizualne (m. in. przyciski mają teraz grafiki oraz reagują na nakierowanie kursorem)
 * Dodano blokadę próby odtwarzania plików innych niż popularne pliki audio lub video przy ładowaniu Drag&Drop
+* Dodano czytanie tytułów, artystów i okładek albumów z metadanych
 
 ### v0.2.3
 * Dodano przycisk mute
