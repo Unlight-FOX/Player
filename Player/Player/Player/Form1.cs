@@ -17,7 +17,6 @@ namespace AVPlayer
         Player myPlayer;
         bool fullScreen = false;
         List<string> ex = new List<string> { ".mp4", ".avi", ".wmv", ".flv", ".mov", ".mp3", ".ogg", ".wma", ".flac", ".aac", ".mkv", ".m4a" };
-
         public playerWindow()
         {
             InitializeComponent();
@@ -32,7 +31,13 @@ namespace AVPlayer
             myPlayer.Sliders.Position.TrackBar = progressBar;
             myPlayer.Sliders.AudioVolume = volumeBar;
             myPlayer.Events.MediaPositionChanged += myPlayer_MediaPositionChanged;
+            myPlayer.Events.MediaEnded += myPlayer_MediaEnded;
     }
+
+
+        //
+        // Przesuwanie okna
+        //
 
         private bool mouseDown;
         private Point lastLocation;
@@ -59,6 +64,32 @@ namespace AVPlayer
             mouseDown = false;
         }
 
+        private void coverArt_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void coverArt_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void coverArt_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
+            }
+        }
+
+        //
+        //Eventy, funkcje
+        //
+
         private void myPlayer_MediaPositionChanged(object sender, PositionEventArgs e)
         {
             TimeSpan fromStart = TimeSpan.FromTicks(e.FromStart);
@@ -70,56 +101,9 @@ namespace AVPlayer
             subtitlesLabel.Text = e.Subtitle;
         }
 
-        private void OpenButton_Click(object sender, EventArgs e)
+        void myPlayer_MediaEnded(object sender, EndedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            openFileDialog.Filter = "Video files |*.mp4;*.avi;*.mkv;*.wmv;*.flv;*.mov;|Audio files|*.mp3;*.ogg;*.m4a;*.flac;*.wav;*.vma;*.aac;";
-
-            openFileDialog.FilterIndex = 1;
-            openFileDialog.RestoreDirectory = false;
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                loadFile(openFileDialog.FileName);
-            }
-        }
-
-        private void loadFile(string file)
-        {
-            myPlayer.Play(file, viewPanel);
-            titleLabel.Text = Path.GetFileName(file);
-            TimeSpan Stop = myPlayer.Media.Length;
-            label2.Text = Stop.ToString(@"hh\:mm\:ss");
-            if (myPlayer.LastError) MessageBox.Show(myPlayer.LastErrorString);
-            playButton.ImageIndex = 2;
-        }
-
-        private void playButton_Click(object sender, EventArgs e)
-        {
-            if (myPlayer.Paused == false)
-            {
-                myPlayer.Pause();
-                playButton.ImageIndex = 1;
-            }
-            else { 
-                myPlayer.Paused = false;
-                playButton.ImageIndex = 3;
-            }
-        }
-
-        private void stopButton_Click(object sender, EventArgs e)
-        {
-            myPlayer.Stop();
-            titleLabel.Text = "No file :(";
-            playButton.ImageIndex = 0;
-        }
-
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            myPlayer.Dispose();
-            myPlayer = null;
-            Close();
+            coverArt.Image = null;
         }
 
         private void fullScr()
@@ -139,6 +123,76 @@ namespace AVPlayer
             }
 
         }
+
+        private void loadFile(string file)
+        {
+            coverArt.Visible = false;
+            myPlayer.Play(file, viewPanel);
+            Metadata meta = myPlayer.Media.GetMetadata();
+            if (myPlayer.Media.GetVideoTracks() == null)
+            {
+                titleLabel.Text = meta.Artist + " - " + meta.Title;
+                coverArt.Image = meta.Image;
+                coverArt.Visible = true;
+            }
+            else
+            {
+                titleLabel.Text = meta.Title;
+            }
+            TimeSpan Stop = myPlayer.Media.Length;
+            label2.Text = Stop.ToString(@"hh\:mm\:ss");
+            if (myPlayer.LastError) MessageBox.Show(myPlayer.LastErrorString);
+            playButton.ImageIndex = 2;
+        }
+
+        //
+        //Przyciski
+        //
+
+        private void playButton_Click(object sender, EventArgs e)
+        {
+            if (myPlayer.Paused == false)
+            {
+                myPlayer.Pause();
+                playButton.ImageIndex = 1;
+            }
+            else { 
+                myPlayer.Paused = false;
+                playButton.ImageIndex = 3;
+            }
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            myPlayer.Stop();
+            titleLabel.Text = "No file :(";
+            label2.Text = "00:00:00";
+            playButton.ImageIndex = 0;
+            coverArt.Image = null;
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            myPlayer.Dispose();
+            myPlayer = null;
+            Close();
+        }
+
+        private void OpenButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            openFileDialog.Filter = "Video files |*.mp4;*.avi;*.mkv;*.wmv;*.flv;*.mov;|Audio files|*.mp3;*.ogg;*.m4a;*.flac;*.wav;*.vma;*.aac;";
+
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = false;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                loadFile(openFileDialog.FileName);
+            }
+        }
+
         private void fullscrButton_Click(object sender, EventArgs e)
         {
             fullScr();
@@ -157,6 +211,29 @@ namespace AVPlayer
             else
                 muteButton.ImageIndex = 3;
         }
+
+        private void buttonHoverOn(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+            switch (b.ImageIndex)
+            {
+                case 0: b.ImageIndex = 1; break;
+                case 2: b.ImageIndex = 3; break;
+            }
+        }
+        private void buttonHoverOut(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+            switch (b.ImageIndex)
+            {
+                case 1: b.ImageIndex = 0; break;
+                case 3: b.ImageIndex = 2; break;
+            }
+        }
+
+        //
+        //Drag and Drop
+        //
 
         private void viewPanel_DragEnter(object sender, DragEventArgs e)
         {
@@ -192,26 +269,6 @@ namespace AVPlayer
             if (viewPanel.BackColor != Color.Black)
                 viewPanel.BackColor = Color.Black;
         }
-
-        private void buttonHoverOn(object sender, EventArgs e)
-        {
-            Button b = sender as Button;
-            switch(b.ImageIndex)
-            {
-                case 0: b.ImageIndex = 1; break ;
-                case 2: b.ImageIndex = 3; break;
-            }
-        }
-        private void buttonHoverOut(object sender, EventArgs e)
-        {
-            Button b = sender as Button;
-            switch (b.ImageIndex)
-            {
-                case 1: b.ImageIndex = 0; break;
-                case 3: b.ImageIndex = 2; break;
-            }
-        }
-
 
     }
 }
