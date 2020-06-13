@@ -16,6 +16,7 @@ namespace AVPlayer
     {
         Player myPlayer;
         bool fullScreen = false;
+        List<string> ex = new List<string> { ".mp4", ".avi", ".wmv", ".flv", ".mov", ".mp3", ".ogg", ".wma", ".flac", ".aac", ".mkv", ".m4a" };
 
         public playerWindow()
         {
@@ -73,7 +74,8 @@ namespace AVPlayer
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            openFileDialog.Filter = "Video files |*.mp4;*.avi;*.mkv;|Audio files|*.mp3;*.ogg;*.m4a;*.flac;*.wav";
+            openFileDialog.Filter = "Video files |*.mp4;*.avi;*.mkv;*.wmv;*.flv;*.mov;|Audio files|*.mp3;*.ogg;*.m4a;*.flac;*.wav;*.vma;*.aac;";
+
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = false;
 
@@ -90,6 +92,7 @@ namespace AVPlayer
             TimeSpan Stop = myPlayer.Media.Length;
             label2.Text = Stop.ToString(@"hh\:mm\:ss");
             if (myPlayer.LastError) MessageBox.Show(myPlayer.LastErrorString);
+            playButton.ImageIndex = 2;
         }
 
         private void playButton_Click(object sender, EventArgs e)
@@ -97,18 +100,19 @@ namespace AVPlayer
             if (myPlayer.Paused == false)
             {
                 myPlayer.Pause();
-                playButton.Text = "Play";
+                playButton.ImageIndex = 1;
             }
             else { 
                 myPlayer.Paused = false;
-                playButton.Text = "Pause";
+                playButton.ImageIndex = 3;
             }
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
             myPlayer.Stop();
-            titleLabel.Text = "";
+            titleLabel.Text = "No file :(";
+            playButton.ImageIndex = 0;
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -148,6 +152,10 @@ namespace AVPlayer
         private void muteButton_Click(object sender, EventArgs e)
         {
             myPlayer.Mute = !myPlayer.Mute;
+            if (myPlayer.Mute == false)
+                muteButton.ImageIndex = 1;
+            else
+                muteButton.ImageIndex = 3;
         }
 
         private void viewPanel_DragEnter(object sender, DragEventArgs e)
@@ -156,13 +164,54 @@ namespace AVPlayer
                 e.Effect = DragDropEffects.All;
             else
                 e.Effect = DragDropEffects.None;
+
+            string [] s = e.Data.GetData(DataFormats.FileDrop) as string[];
+            string E = s[0];
+            if (!ex.Contains(Path.GetExtension(E), StringComparer.OrdinalIgnoreCase) )
+            {
+                viewPanel.BackColor = Color.FromArgb(255,75,0,0);
+            }
+            this.Opacity = 0.75;
         }
 
         private void viewPanel_DragDrop(object sender, DragEventArgs e)
         {
             string[] s = e.Data.GetData(DataFormats.FileDrop) as string[];
             string path = s[0];
-            loadFile(path);
+            if (ex.Contains(Path.GetExtension(path), StringComparer.OrdinalIgnoreCase))
+            {
+                loadFile(path);
+            }
+            this.Opacity = 1;
+            viewPanel.BackColor = Color.Black;
+
         }
+        private void viewPanel_DragLeave(object sender, EventArgs e)
+        {
+            this.Opacity = 1;
+            if (viewPanel.BackColor != Color.Black)
+                viewPanel.BackColor = Color.Black;
+        }
+
+        private void buttonHoverOn(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+            switch(b.ImageIndex)
+            {
+                case 0: b.ImageIndex = 1; break ;
+                case 2: b.ImageIndex = 3; break;
+            }
+        }
+        private void buttonHoverOut(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+            switch (b.ImageIndex)
+            {
+                case 1: b.ImageIndex = 0; break;
+                case 3: b.ImageIndex = 2; break;
+            }
+        }
+
+
     }
 }
