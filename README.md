@@ -4,7 +4,7 @@ Video and music player
 ### v0.3
 * Zaimplementowano funkcjonalność playlist
 * Dokonano usprawnień wizualnych (dodano ikonę aplikacji itd.)
-* Dokonano pomniekszych usprawnień kodu.
+* Dokonano pomniejszych usprawnień kodu.
 
 ### v0.2.4 
 * Usprawnienia wizualne (m. in. przyciski mają teraz grafiki oraz reagują na nakierowanie kursorem)
