@@ -47,3 +47,16 @@ C:\Users\Hybris\Desktop\projekt player\repozytorium — backup\Player\Player\Pla
 C:\Users\Hybris\Desktop\projekt player\repozytorium — backup\Player\Player\Player\Player\obj\Debug\Player.csproj.CopyComplete
 C:\Users\Hybris\Desktop\projekt player\repozytorium — backup\Player\Player\Player\Player\obj\Debug\AVPlayer.exe
 C:\Users\Hybris\Desktop\projekt player\repozytorium — backup\Player\Player\Player\Player\obj\Debug\AVPlayer.pdb
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\bin\Debug\AVPlayer.exe.config
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\bin\Debug\AVPlayer.exe
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\bin\Debug\AVPlayer.pdb
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\bin\Debug\PVS.MediaPlayer.xml
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\obj\Debug\Player.csprojAssemblyReference.cache
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\obj\Debug\AVPlayer.playerWindow.resources
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\obj\Debug\AVPlayer.Playlist.resources
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\obj\Debug\AVPlayer.Properties.Resources.resources
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\obj\Debug\Player.csproj.GenerateResource.cache
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\obj\Debug\Player.csproj.CoreCompileInputs.cache
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\obj\Debug\Player.csproj.CopyComplete
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\obj\Debug\AVPlayer.exe
+C:\Users\Hybris\Desktop\projekt player\official\Player-Official\Player\Player\Player\obj\Debug\AVPlayer.pdb

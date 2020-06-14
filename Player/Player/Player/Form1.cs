@@ -27,7 +27,7 @@ namespace AVPlayer
             InitializeComponent();
 
             files = new List<string>();
-            filesToPlay = 0;
+            filesToPlay = -1;
 
             this.ControlBox = false;
             this.MaximizeBox = false;
@@ -157,6 +157,9 @@ namespace AVPlayer
             titleLabel.Text = "No file :(";
             playButton.ImageIndex = 0;
             viewPanel.BackgroundImage = null;
+            nextButton.Visible = false;
+            filesToPlay = -1;
+            files = null;
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -226,7 +229,6 @@ namespace AVPlayer
             {
                 loadFile(path);
             }
-            //MessageBox.Show(Path.GetExtension(path));
             this.Opacity = 1;
             viewPanel.BackColor = Color.Black;
 
@@ -264,6 +266,7 @@ namespace AVPlayer
                 playL.Show();
                 isPlaylistOpen = true;
                 playlistButton.Text = "Apply";
+                nextButton.Visible = false;
             }
             else
             {
@@ -271,9 +274,19 @@ namespace AVPlayer
                 playL.Hide();
                 isPlaylistOpen = false;
                 files = playL.nameList;
-                filesToPlay = files.Count - 1;
+                filesToPlay = (files.Count());
+                if (filesToPlay > 1)
+                    nextButton.Visible = true;
                 PlayNext();
             }
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (filesToPlay != -1)
+                PlayNext();
+
+
         }
     }
 }
