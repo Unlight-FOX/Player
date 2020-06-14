@@ -1,5 +1,9 @@
-# Player
-Video and music player 
+# AVPlayer
+Audio and Video Player 
+
+### v0.3.1
+* Dodano przycisk next(ładuje kolejny plik z playlisty)
+* Dokonano pomniejszych usprawnień (np. od teraz naliczanie plików do wyświetlenia działa poprawnie)
 
 ### v0.3
 * Zaimplementowano funkcjonalność playlist
