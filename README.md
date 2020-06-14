@@ -1,6 +1,11 @@
 # Player
 Video and music player 
 
+### v0.3
+* Zaimplementowano funkcjonalność playlist
+* Dokonano usprawnień wizualnych (dodano ikonę aplikacji itd.)
+* Dokonano pomniekszych usprawnień kodu.
+
 ### v0.2.4 
 * Usprawnienia wizualne (m. in. przyciski mają teraz grafiki oraz reagują na nakierowanie kursorem)
 * Dodano blokadę próby odtwarzania plików innych niż popularne pliki audio lub video przy ładowaniu Drag&Drop
