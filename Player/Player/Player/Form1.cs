@@ -16,7 +16,7 @@ namespace AVPlayer
     {
         Player myPlayer;
         bool fullScreen = false;
-        List<string> ex = new List<string> { ".mp4", ".avi", ".wmv", ".flv", ".mov", ".mp3", ".ogg", ".wma", ".flac", ".aac", ".mkv", ".m4a" };
+        List<string> ex = new List<string> { ".mp4", ".avi", ".wmv", ".flv", ".mov", ".mp3", ".ogg", ".wma", ".flac", ".aac", ".mkv", ".m4a", ".wav" };
         AVPlayer.Playlist playL = new AVPlayer.Playlist();
         List<string> files;
         int filesToPlay;
@@ -123,10 +123,14 @@ namespace AVPlayer
             Metadata meta = myPlayer.Media.GetMetadata();
             if (myPlayer.Media.GetVideoTracks() == null)
             {
+                titleLabel.Text = meta.Artist + " - " + meta.Title;
                 viewPanel.BackgroundImage = meta.Image;
-                viewPanel.BackgroundImageLayout = ImageLayout.Center;
+                viewPanel.BackgroundImageLayout = ImageLayout.Zoom;
             }
-            titleLabel.Text = Path.GetFileName(file);
+            else
+            {
+                titleLabel.Text = meta.Title;
+            }
             TimeSpan Stop = myPlayer.Media.Length;
             label2.Text = Stop.ToString(@"hh\:mm\:ss");
             if (myPlayer.LastError) MessageBox.Show(myPlayer.LastErrorString);
@@ -222,7 +226,7 @@ namespace AVPlayer
             {
                 loadFile(path);
             }
-            MessageBox.Show(Path.GetExtension(path));
+            //MessageBox.Show(Path.GetExtension(path));
             this.Opacity = 1;
             viewPanel.BackColor = Color.Black;
 
@@ -259,7 +263,7 @@ namespace AVPlayer
             {
                 playL.Show();
                 isPlaylistOpen = true;
-                playlistButton.Text = "Aply";
+                playlistButton.Text = "Apply";
             }
             else
             {
